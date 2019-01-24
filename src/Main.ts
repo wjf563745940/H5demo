@@ -2,12 +2,12 @@
 //
 //  Copyright (c) 2014-present, Egret Technology.
 //  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
+//  Redistribution and use in source and binary froms, with or without
 //  modification, are permitted provided that the following conditions are met:
 //
 //     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
+//     * Redistributions in binary from must reproduce the above copyright
 //       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
 //     * Neither the name of the Egret nor the
@@ -62,8 +62,8 @@ class Main extends eui.UILayer {
         this.createGameScene();
         const result = await RES.getResAsync("description_json")
         this.startAnimation(result);
-        await platform.login();
-        const userInfo = await platform.getUserInfo();
+        await platfrom.login();
+        const userInfo = await platfrom.getUserInfo();
         console.log(userInfo);
 
     }
@@ -162,10 +162,6 @@ class Main extends eui.UILayer {
             fromh:932,
             fromx:0,
             fromy:0,
-            // tow:543*2,
-            // toh:932*2,
-            // tox:0-543,
-            // toy:0-0,
         }
         })
         let topMask = new egret.Shape();
@@ -299,40 +295,30 @@ class Main extends eui.UILayer {
         let stageH = this.stage.stageHeight;
          let img2=this.img2;
          let imgfirst=this.imgfirst;
-
         let _firstObj=this._firstObj;
           let _secondObj=this._secondObj;
-        var wdefbp=_firstObj['tow']/_firstObj['fromw'];
-         var hdefbp=_firstObj['toh']/_firstObj['fromh'];
-         var xdefbp=(_firstObj['formx']-_firstObj['tox'])*(_secondObj['fromw']/_firstObj['fromw']);
-         var ydefbp=(_firstObj['formy']-_firstObj['toy'])*(_secondObj['fromh']/_firstObj['fromh']);
+        var secondTow=_firstObj['tow']/_firstObj['fromw']*_secondObj['fromw'];
+         var secondToh=_firstObj['toh']/_firstObj['fromh']*_secondObj['fromh'];
+         var secondTox=_secondObj['fromx']-(_firstObj['fromx']-_firstObj['tox'])*(_secondObj['fromw']/_firstObj['fromw']);
+         var secondToy=_secondObj['fromy']-(_firstObj['fromy']-_firstObj['toy'])*(_secondObj['fromh']/_firstObj['fromh']);
         egret.Tween.get(imgfirst).to({
             width:_firstObj['width']/_firstObj['tow']*stageW,
             height:_firstObj['height']/_firstObj['toh']*stageH,
              x:-_firstObj['tox']/_firstObj['tow']*stageW,
             y:-_firstObj['toy']/_firstObj['toh']*stageH,
         },800,egret.Ease.sineIn );
-
-      
         egret.Tween.get(img2).to({
-            width:_secondObj['width']/_secondObj['fromw']*wdefbp*stageW,
-            height:_secondObj['height']/_secondObj['fromh']*hdefbp*stageH,
-        x:-(_secondObj['fromx']-xdefbp)/_secondObj['tow']*stageW,
-            y:-(_secondObj['fromy']-ydefbp)/_secondObj['toh']*stageH,
+            width:_secondObj['width']/secondTow*stageW,
+        height:_secondObj['height']/secondToh*stageH,
+        x:-secondTox/secondTow*stageW,
+        y:-secondToy/secondToh*stageH,
         },800,egret.Ease.sineIn );
-       // this.nextArray=[152*2,260*2,320,148];
-    
         let defb=this.nextArray[1]/ _firstObj['toh'];
         let xdefb=(_firstObj['tox']-this.nextArray[2])/_firstObj['tow'];
         let ydefb=(_firstObj['toy']-this.nextArray[3])/_firstObj['toh'];
         this.changeParams(this._firstObj,_firstObj['tow']*defb,_firstObj['toh']*defb,(_firstObj['tox']-_firstObj['tow']*xdefb),(_firstObj['toy']-_firstObj['toh']*ydefb));
-         this.changeParams(this._secondObj,_secondObj['tow']*defb,_secondObj['toh']*defb,(_secondObj['tox']-_secondObj['tow']*xdefb),(_secondObj['toy']-_secondObj['toh']*ydefb));
+          this.changeParams(this._secondObj,secondTow*defb,secondToh*defb,(secondTox-secondTow*xdefb),(secondToy-secondToh*ydefb));
          this.nextArray=this.nextArrays[1];
-        // let panel = new eui.Panel();
-        // panel.title = "Title";
-        // panel.horizontalCenter = 0;
-        // panel.verticalCenter = 0;
-        // this.addChild(panel);
     }
 
     /**
@@ -340,36 +326,63 @@ class Main extends eui.UILayer {
      * Click the button
      */
     private onButtonClick2(e: egret.TouchEvent) {
-         let stageW = this.stage.stageWidth;
+        //  let stageW = this.stage.stageWidth;
+        // let stageH = this.stage.stageHeight;
+        //  let img2=this.img2;
+        //  let imgfirst=this.imgfirst;
+
+        // let _firstObj=this._firstObj;
+        // egret.Tween.get(imgfirst).to({
+        //     width:_firstObj['width']/_firstObj['tow']*stageW,
+        //     height:_firstObj['height']/_firstObj['toh']*stageH,
+        //      x:-_firstObj['tox']/_firstObj['tow']*stageW,
+        //     y:-_firstObj['toy']/_firstObj['toh']*stageH,
+        // },800,egret.Ease.sineIn );
+
+        // let _secondObj=this._secondObj;
+        // egret.Tween.get(img2).to({
+        //     width:_secondObj['width']/_secondObj['tow']*stageW,
+        //     height:_secondObj['height']/_secondObj['toh']*stageH,
+        //      x:-_secondObj['tox']/_secondObj['tow']*stageW,
+        //     y:-_secondObj['toy']/_secondObj['toh']*stageH,
+        // },800,egret.Ease.sineIn );
+        // // let defb=_firstObj['height']/ _firstObj['toh'];
+        // // let hb=_firstObj['toy']/_firstObj['height'];
+        // // let xdefb=(_firstObj['tox']-(_firstObj['width']-_firstObj['tow']*defb)/2)/_firstObj['width'];
+        // // this.changeParams(this._firstObj,_firstObj['tow']*defb,_firstObj['toh']*defb,(_firstObj['tox']-_firstObj['fromw']*1),(_firstObj['toy']-_firstObj['toh']*hb));
+        // //  this.changeParams(this._secondObj,_secondObj['tow']*defb,_secondObj['toh']*defb,_secondObj['tox']-_secondObj['fromw']*1,(_secondObj['toy']-_secondObj['toh']*hb));
+        // let defb=this.nextArray[1]/ _firstObj['toh'];
+        // let xdefb=(_firstObj['tox']-this.nextArray[2])/_firstObj['tow'];
+        // let ydefb=(_firstObj['toy']-this.nextArray[3])/_firstObj['toh'];
+        // this.changeParams(this._firstObj,_firstObj['tow']*defb,_firstObj['toh']*defb,(_firstObj['tox']-_firstObj['tow']*xdefb),(_firstObj['toy']-_firstObj['toh']*ydefb));
+        //  this.changeParams(this._secondObj,_secondObj['tow']*defb,_secondObj['toh']*defb,(_secondObj['tox']-_secondObj['tow']*xdefb),(_secondObj['toy']-_secondObj['toh']*ydefb));
+           let stageW = this.stage.stageWidth;
         let stageH = this.stage.stageHeight;
          let img2=this.img2;
          let imgfirst=this.imgfirst;
-
         let _firstObj=this._firstObj;
+          let _secondObj=this._secondObj;
+        var secondTow=_firstObj['tow']/_firstObj['fromw']*_secondObj['fromw'];
+         var secondToh=_firstObj['toh']/_firstObj['fromh']*_secondObj['fromh'];
+         var secondTox=_secondObj['fromx']-(_firstObj['fromx']-_firstObj['tox'])*(_secondObj['fromw']/_firstObj['fromw']);
+         var secondToy=_secondObj['fromy']-(_firstObj['fromy']-_firstObj['toy'])*(_secondObj['fromh']/_firstObj['fromh']);
         egret.Tween.get(imgfirst).to({
             width:_firstObj['width']/_firstObj['tow']*stageW,
             height:_firstObj['height']/_firstObj['toh']*stageH,
              x:-_firstObj['tox']/_firstObj['tow']*stageW,
             y:-_firstObj['toy']/_firstObj['toh']*stageH,
         },800,egret.Ease.sineIn );
-
-        let _secondObj=this._secondObj;
         egret.Tween.get(img2).to({
-            width:_secondObj['width']/_secondObj['tow']*stageW,
-            height:_secondObj['height']/_secondObj['toh']*stageH,
-             x:-_secondObj['tox']/_secondObj['tow']*stageW,
-            y:-_secondObj['toy']/_secondObj['toh']*stageH,
+            width:_secondObj['width']/secondTow*stageW,
+        height:_secondObj['height']/secondToh*stageH,
+        x:-secondTox/secondTow*stageW,
+        y:-secondToy/secondToh*stageH,
         },800,egret.Ease.sineIn );
-        // let defb=_firstObj['height']/ _firstObj['toh'];
-        // let hb=_firstObj['toy']/_firstObj['height'];
-        // let xdefb=(_firstObj['tox']-(_firstObj['width']-_firstObj['tow']*defb)/2)/_firstObj['width'];
-        // this.changeParams(this._firstObj,_firstObj['tow']*defb,_firstObj['toh']*defb,(_firstObj['tox']-_firstObj['fromw']*1),(_firstObj['toy']-_firstObj['toh']*hb));
-        //  this.changeParams(this._secondObj,_secondObj['tow']*defb,_secondObj['toh']*defb,_secondObj['tox']-_secondObj['fromw']*1,(_secondObj['toy']-_secondObj['toh']*hb));
         let defb=this.nextArray[1]/ _firstObj['toh'];
         let xdefb=(_firstObj['tox']-this.nextArray[2])/_firstObj['tow'];
         let ydefb=(_firstObj['toy']-this.nextArray[3])/_firstObj['toh'];
         this.changeParams(this._firstObj,_firstObj['tow']*defb,_firstObj['toh']*defb,(_firstObj['tox']-_firstObj['tow']*xdefb),(_firstObj['toy']-_firstObj['toh']*ydefb));
-         this.changeParams(this._secondObj,_secondObj['tow']*defb,_secondObj['toh']*defb,(_secondObj['tox']-_secondObj['tow']*xdefb),(_secondObj['toy']-_secondObj['toh']*ydefb));
+          this.changeParams(this._secondObj,secondTow*defb,secondToh*defb,(secondTox-secondTow*xdefb),(secondToy-secondToh*ydefb));
     }
       /**
      * 点击按钮
@@ -382,21 +395,23 @@ class Main extends eui.UILayer {
          let imgfirst=this.imgfirst;
 
         let _firstObj=this._firstObj;
+        let _secondObj=this._secondObj;
+         var secondTow=_firstObj['tow']/_firstObj['fromw']*_secondObj['fromw'];
+         var secondToh=_firstObj['toh']/_firstObj['fromh']*_secondObj['fromh'];
+         var secondTox=_secondObj['fromx']-(_firstObj['fromx']-_firstObj['tox'])*(_secondObj['fromw']/_firstObj['fromw']);
+         var secondToy=_secondObj['fromy']-(_firstObj['fromy']-_firstObj['toy'])*(_secondObj['fromh']/_firstObj['fromh']);
         egret.Tween.get(imgfirst).to({
             width:_firstObj['width']/_firstObj['tow']*stageW,
             height:_firstObj['height']/_firstObj['toh']*stageH,
              x:-_firstObj['tox']/_firstObj['tow']*stageW,
             y:-_firstObj['toy']/_firstObj['toh']*stageH,
         },800,egret.Ease.sineIn );
-
-        let _secondObj=this._secondObj;
         egret.Tween.get(img2).to({
-            width:_secondObj['width']/_secondObj['tow']*stageW,
-            height:_secondObj['height']/_secondObj['toh']*stageH,
-             x:-_secondObj['tox']/_secondObj['tow']*stageW,
-            y:-_secondObj['toy']/_secondObj['toh']*stageH,
+            width:_secondObj['width']/secondTow*stageW,
+        height:_secondObj['height']/secondToh*stageH,
+        x:-secondTox/secondTow*stageW,
+        y:-secondToy/secondToh*stageH,
         },800,egret.Ease.sineIn );
-        let defb=_firstObj['height']/ _firstObj['toh'];
      
     }
     private onButtonClick4(e: egret.TouchEvent) {
@@ -409,16 +424,16 @@ class Main extends eui.UILayer {
             params:{
             width:482,
             height:930,
-            fromw:32,
+            fromw:34,
             fromh:58,
-            fromx:393,
+            fromx:391.5,
             fromy:286,
-            tow:32*3,
-            toh:58*3,
-            tox:375,
-            toy:286,
+            tow:34*5,
+            toh:58*5,
+            tox:375-100,
+            toy:286-100,
         },
-        nextAni:[[152*2,260*2,600,148] ,[false,930,307,0]]
+        nextAni:[[152*2,260*2,600,148] ]
         },{
             url:'2_jpg',//543,932
             params:{
@@ -428,10 +443,6 @@ class Main extends eui.UILayer {
             fromh:lastObj['toh'],
             fromx:lastObj['tox'],
             fromy:lastObj['toy'],
-            tow:lastObj['tow']*3,
-            toh:lastObj['toh']*3,
-            tox:0,
-            toy:0,
         }
         })
            
@@ -441,22 +452,24 @@ class Main extends eui.UILayer {
          let img2=this.img2;
          let imgfirst=this.imgfirst;
 
-        let  _firstObj=this._firstObj;
+       let _firstObj=this._firstObj;
+        let _secondObj=this._secondObj;
+         var secondTow=_firstObj['tow']/_firstObj['fromw']*_secondObj['fromw'];
+         var secondToh=_firstObj['toh']/_firstObj['fromh']*_secondObj['fromh'];
+         var secondTox=_secondObj['fromx']-(_firstObj['fromx']-_firstObj['tox'])*(_secondObj['fromw']/_firstObj['fromw']);
+         var secondToy=_secondObj['fromy']-(_firstObj['fromy']-_firstObj['toy'])*(_secondObj['fromh']/_firstObj['fromh']);
         egret.Tween.get(imgfirst).to({
             width:_firstObj['width']/_firstObj['tow']*stageW,
             height:_firstObj['height']/_firstObj['toh']*stageH,
              x:-_firstObj['tox']/_firstObj['tow']*stageW,
             y:-_firstObj['toy']/_firstObj['toh']*stageH,
         },800,egret.Ease.sineIn );
-
-        let _secondObj=this._secondObj;
         egret.Tween.get(img2).to({
-            width:_secondObj['width']/_secondObj['tow']*stageW,
-            height:_secondObj['height']/_secondObj['toh']*stageH,
-             x:-_secondObj['tox']/_secondObj['tow']*stageW,
-            y:-_secondObj['toy']/_secondObj['toh']*stageH,
+            width:_secondObj['width']/secondTow*stageW,
+        height:_secondObj['height']/secondToh*stageH,
+        x:-secondTox/secondTow*stageW,
+        y:-secondToy/secondToh*stageH,
         },800,egret.Ease.sineIn );
-        let defb=_firstObj['height']/ _firstObj['toh'];
     }
     private changeParams(obj,tow,toh,tox,toy){
         obj['fromw']=obj['tow'];
